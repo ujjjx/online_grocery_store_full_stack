@@ -1,7 +1,7 @@
 import os
 import secrets
 from datetime import timedelta
-from flask import Flask, request, jsonify, session, redirect, url_for, send_from_directory
+from flask import Flask, request, jsonify, session,url_for
 from flask_mail import Mail
 from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
@@ -21,7 +21,7 @@ app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")  # Your email here
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 mail = Mail(app)
 # ------------------ CORS ------------------
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+CORS(app, supports_credentials=True, origins=["http://localhost:5173","http://localhost:5000"])
 # ------------------ Service ------------------
 service = CustomerService(mail)
 # ------------------ Session ------------------
@@ -42,16 +42,6 @@ google = oauth.register(
     client_kwargs={"scope": "openid email profile"},
     PERMANENT_SESSION_LIFETIME=timedelta(hours=2),
 )
-# ------------------ Frontend Serving (MPA) ------------------
-@app.route("/", defaults={"path": "index.html"})
-@app.route("/<path:path>")
-def serve_frontend(path):
-    file_path = os.path.join(app.static_folder, path)
-    if os.path.exists(file_path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        # Optional fallback to index.html for unknown paths
-        return send_from_directory(app.static_folder, "index.html")
 # ------------------ Routes ------------------
 @app.route('/register', methods=['POST'])
 def register():
