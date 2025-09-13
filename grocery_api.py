@@ -1,26 +1,30 @@
 import os
-from flask import Flask, request, jsonify, session, redirect, url_for 
+import secrets
+from datetime import timedelta
+from flask import Flask, request, jsonify, session, redirect, url_for, send_from_directory
+from flask_mail import Mail
+from flask_cors import CORS
+from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 from backend.service.cust_service import CustomerService
 from backend.utils.exceptions import ServiceException
-from authlib.integrations.flask_client import OAuth
-from flask_mail import Mail, Message
-from dotenv import load_dotenv
-import random
-from flask_cors import CORS
-from datetime import timedelta
+# Load environment variables
 load_dotenv()
-import secrets
-app = Flask(__name__)
+# ------------------ Flask App ------------------
+app = Flask(__name__, static_folder='frontend/Online_Grocery_Store/dist', static_url_path='')
 app.secret_key = os.getenv("SECRET_KEY", secrets.token_hex(16))
+# ------------------ Mail ------------------
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")  # Your email here
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 mail = Mail(app)
-# Allow frontend (5173) to call backend (5000)
+# ------------------ CORS ------------------
 CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+# ------------------ Service ------------------
 service = CustomerService(mail)
+# ------------------ Session ------------------
 app.config.update(
     SESSION_COOKIE_NAME="session",
     SESSION_COOKIE_HTTPONLY=True,
@@ -28,6 +32,7 @@ app.config.update(
     SESSION_COOKIE_SECURE=False,    # must stay False for localhost http
     PERMANENT_SESSION_LIFETIME=timedelta(hours=2)
 )
+# ------------------ OAuth ------------------
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
@@ -37,7 +42,17 @@ google = oauth.register(
     client_kwargs={"scope": "openid email profile"},
     PERMANENT_SESSION_LIFETIME=timedelta(hours=2),
 )
-
+# ------------------ Frontend Serving (MPA) ------------------
+@app.route("/", defaults={"path": "index.html"})
+@app.route("/<path:path>")
+def serve_frontend(path):
+    file_path = os.path.join(app.static_folder, path)
+    if os.path.exists(file_path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        # Optional fallback to index.html for unknown paths
+        return send_from_directory(app.static_folder, "index.html")
+# ------------------ Routes ------------------
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
@@ -305,5 +320,6 @@ def logout(customer_id):
         return jsonify({"message": "Logged out successfully!"})
     except ServiceException as e:
         return jsonify({"error": str(e)}), 500
+# ------------------ Run ------------------
 if __name__ == '__main__':
     app.run(debug=True)
