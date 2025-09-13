@@ -1,0 +1,22 @@
+name,description,company_name,price,quantity,reserved,image_path
+iPhone 15,Smartphone with A16 chip,Apple,999.99,50,0,/images/iphone15.jpg
+Galaxy S23,Flagship Android phone,Samsung,899.99,30,0,/images/galaxy_s23.jpg
+Pixel 8,Google AI-powered phone,Google,799.99,20,0,/images/pixel_8.jpg
+MacBook Pro 16,High-performance laptop,Apple,2499.99,15,0,/images/macbook_pro_16.jpg
+iPad Pro 12.9,Tablet with M2 chip,Apple,1199.99,25,0,/images/ipad_pro_12.jpg
+Surface Laptop 5,Sleek Windows ultrabook,Microsoft,1499.99,18,0,/images/surface_laptop5.jpg
+Dell XPS 15,Powerful creator laptop,Dell,1799.99,12,0,/images/dell_xps_15.jpg
+HP Spectre x360,Convertible 2-in-1 laptop,HP,1399.99,22,0,/images/hp_spectre_x360.jpg
+Sony WH-1000XM5,Noise-canceling headphones,Sony,399.99,40,0,/images/sony_wh1000xm5.jpg
+AirPods Pro 2,Wireless earbuds with ANC,Apple,249.99,60,0,/images/airpods_pro2.jpg
+Galaxy Buds 2 Pro,Premium wireless earbuds,Samsung,229.99,55,0,/images/galaxy_buds2_pro.jpg
+Apple Watch Series 9,Smartwatch with health tracking,Apple,499.99,35,0,/images/apple_watch9.jpg
+Galaxy Watch 6,Android smartwatch,Samsung,399.99,28,0,/images/galaxy_watch6.jpg
+Fitbit Sense 2,Fitness smartwatch,Fitbit,299.99,32,0,/images/fitbit_sense2.jpg
+LG OLED CX,55-inch 4K OLED TV,LG,1599.99,10,0,/images/lg_oled_cx.jpg
+Samsung QN90A,65-inch Neo QLED 4K TV,Samsung,1999.99,8,0,/images/samsung_qn90a.jpg
+Sony Bravia XR,75-inch 4K HDR TV,Sony,2299.99,6,0,/images/sony_bravia_xr.jpg
+Nikon Z6 II,Full-frame mirrorless camera,Nikon,1999.99,9,0,/images/nikon_z6ii.jpg
+Canon EOS R7,APS-C mirrorless camera,Canon,1499.99,11,0,/images/canon_eos_r7.jpg
+GoPro Hero 11,Action camera with 5.3K video,GoPro,499.99,20,0,/images/gopro_hero11.jpg
+Bose QuietComfort 45,Over-ear noise-canceling headphones,Bose,329.99,30,0,/images/bose_qc45.jpg
