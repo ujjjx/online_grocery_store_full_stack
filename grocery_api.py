@@ -21,7 +21,16 @@ app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")  # Your email here
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
 mail = Mail(app)
 # ------------------ CORS ------------------
-CORS(app, supports_credentials=True, origins=["http://localhost:5173","http://localhost:5000"])
+CORS(
+    app,
+    resources={r"/*": {"origins": [
+        "http://localhost:5173",
+        "https://online-grocery-store-full-stack-frontend.onrender.com"
+    ]}},
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
 # ------------------ Service ------------------
 service = CustomerService(mail)
 # ------------------ Session ------------------
