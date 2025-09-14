@@ -61,8 +61,8 @@ export const loginWithGoogle = (redirectTo = '/') => {
  */
 export const logoutUser = async (customer_id) => {
   try {
+    const response = await axiosInstance.post(`/logout`, {}, { withCredentials: true });
     console.log('Logging out user with customer_id:', customer_id);
-    const response = await axiosInstance.post(`/logout/${customer_id}`, {}, { withCredentials: true });
     console.log('Logout response:', response);
     return response.data;
   } catch (error) {

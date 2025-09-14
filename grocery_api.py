@@ -12,7 +12,7 @@ from backend.utils.exceptions import ServiceException
 load_dotenv()
 # ------------------ Flask App ------------------
 app = Flask(__name__, static_folder='frontend/Online_Grocery_Store/dist', static_url_path='')
-app.secret_key = os.getenv("SECRET_KEY", secrets.token_hex(16))
+app.secret_key = "super-secret-key-change-me"
 # ------------------ Mail ------------------
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -109,6 +109,7 @@ def google_callback():
             return jsonify({"success": False, "error": "Google login failed"}), 400
         customer_id = service.login_with_google(email, name, google_id, picture_url)
         session['customer_id'] = customer_id
+        print("customer_id during login:", customer_id)  # Debug
         session['email'] = email
         session['name'] = name
         session.permanent = True
@@ -309,9 +310,13 @@ def soft_delete_customer():
     except ServiceException as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route('/logout/<int:customer_id>', methods=['POST'])
-def logout(customer_id):
+@app.route('/logout', methods=['POST'])
+def logout():
     try:
+        # return jsonify({"session": dict(session)})
+        print("session:", session)
+        customer_id=session.get('customer_id')
+        print("customer_id:", customer_id)
         service.logout(customer_id)
         session.pop('customer_id', None)
         session.pop('email', None)

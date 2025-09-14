@@ -13,4 +13,4 @@ def remove_table(db_path, table_name):
         conn.close()
 
 # Example usage:
-remove_table('grocery_store.db', "'UnverifiedUsers'")
+remove_table('grocery_store.db', '"Login"')

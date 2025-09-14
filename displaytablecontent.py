@@ -18,4 +18,4 @@ def display_table_content(db_path, table_name):
 
 if __name__ == "__main__":
 
-    display_table_content('grocery_store.db', '"Customer"')
+    display_table_content('grocery_store.db', '"Login"')

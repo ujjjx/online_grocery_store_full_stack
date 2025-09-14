@@ -130,9 +130,9 @@ class CustomerDAO:
             else:
                 # Create new customer
                 cursor.execute("""
-                    INSERT INTO Customer (name, email, password, address, contact_number)
-                    VALUES (?, ?, NULL, NULL, NULL)
-                """, (name, email))
+                    INSERT INTO Customer (customer_id,name, email, password, address, contact_number)
+                    VALUES (?,?, ?, NULL, NULL, NULL)
+                """, (id, name, email))
                 
                 customer_id = id
                 # Insert login record

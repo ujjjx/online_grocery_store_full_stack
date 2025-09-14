@@ -20,15 +20,6 @@ export function AuthProvider({ children }) {
                         localStorage.removeItem('grocery_user');
                     }
                 }
-
-                const authStatus = await checkAuthStatus();
-                if (authStatus.authenticated && authStatus.user) {
-                    setUser(authStatus.user);
-                    localStorage.setItem('grocery_user', JSON.stringify(authStatus.user));
-                } else {
-                    setUser(null);
-                    localStorage.removeItem('grocery_user');
-                }
             } catch (error) {
                 console.error('Auth check failed:', error);
                 setUser(null);
@@ -37,9 +28,13 @@ export function AuthProvider({ children }) {
                 setLoading(false);
             }
         };
-
         checkUserSession();
     }, []);
+    useEffect(() => {
+        if (user) {
+            console.log("✅ User updated:", user);
+        }
+    }, [user]);
 
     // ✅ Normal login OR Google login use the same structure
     const handleLoginResponse = (response) => {
